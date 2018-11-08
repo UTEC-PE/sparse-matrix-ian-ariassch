@@ -72,9 +72,9 @@ class Matrix {
                 nodo->x = x;
                 nodo->y = y;
                 nodo->data = data;
-                for(int xi=0; xi<columns; xi++)
+                for(int xi=0; xi<=columns; xi++)
                 {
-                    if(tempX->x==x)
+                    if(tempX->x==nodo->x)
                     {
                         if(tempX->down==NULL)
                         {
@@ -90,13 +90,17 @@ class Matrix {
                         {
                             tempX->down->down=nodo;
                         }
+
                         break;
                     }
+                    if(tempX->next!=NULL)
+                    {
                     tempX = tempX->next;
+                    }
                 }
-                for(int yi=0; yi<rows; yi++)
+                for(int yi=0; yi<=rows; yi++)
                 {
-                    if(tempY->y==y)
+                    if(tempY->y==nodo->y)
                     {
                         if(tempY->next==NULL)
                         {
@@ -108,12 +112,17 @@ class Matrix {
                             nodo->next=tempY->next;
                             tempY->next=nodo;
                         }
-                        else if(tempX->next->y<nodo->y)
+                        else if(tempY->next->y<nodo->y)
                         {
-                            tempX->next->next=nodo;
+                            tempY->next->next=nodo;
                         }
+
+                        break;
                     }
-                    tempY = tempY->down;
+                    if(tempY->down!=NULL)
+                    {
+                        tempY = tempY->down;
+                    }
                 }
                 cout<<"Created node in"<<" "<<nodo->x<<" "<<nodo->y;
             }

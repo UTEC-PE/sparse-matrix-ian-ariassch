@@ -124,7 +124,7 @@ class Matrix {
                         tempY = tempY->down;
                     }
                 }
-                cout<<"Created node in"<<" "<<nodo->x<<" "<<nodo->y<<"with data: "<<nodo->data<<endl;
+                cout<<"Created node in"<<" "<<nodo->x<<" "<<nodo->y<<" with data: "<<nodo->data<<endl;
             }
 
         };
@@ -158,7 +158,26 @@ class Matrix {
             }
         };
         Matrix<T> operator*(Matrix<T> other){};
-        Matrix<T> operator*(T scalar){};
+        Matrix<T> operator*(T scalar)
+        {
+            auto *temp = hColumns;
+            for(int i=0; i<=columns; i++)
+            {
+                if(temp->next)
+                {
+                temp = temp->next;
+                    for(int i=0; i<=rows;i++)
+                    {
+                        if(temp->down)
+                        {
+                            temp = temp->down;
+                            temp->data *= scalar;
+                        }
+                    }
+                }
+
+            }
+        };
         Matrix<T> operator+(Matrix<T> other){};
         Matrix<T> operator-(Matrix<T> other){};
         Matrix<T> transposed(){};

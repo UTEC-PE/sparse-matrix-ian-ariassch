@@ -124,23 +124,38 @@ class Matrix {
                         tempY = tempY->down;
                     }
                 }
-                cout<<"Created node in"<<" "<<nodo->x<<" "<<nodo->y;
+                cout<<"Created node in"<<" "<<nodo->x<<" "<<nodo->y<<"with data: "<<nodo->data<<endl;
             }
 
         };
         T operator()(int x, int y)
         {
+            if(x == 0 or y == 0)
+            {
+                cout<<"InvalidIndex"<<endl;
+                throw;
+            }
+            else{
             auto *temp = hColumns;
          
             while(temp->x != x and temp->next != NULL)
             {
                 temp=temp->next;
-                while(temp->y != y and temp->down != NULL)
-                {
-                    temp=temp->down;
-                }
             }
-            return temp->data;
+            while(temp->y != y and temp->down != NULL)
+            {
+                temp=temp->down;
+            }
+
+             if(temp->x == x and temp->y == y)
+             {
+                return temp->data;
+             }
+             else
+                 {
+                 return 0;
+                 }
+            }
         };
         Matrix<T> operator*(Matrix<T> other){};
         Matrix<T> operator*(T scalar){};

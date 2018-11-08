@@ -128,7 +128,20 @@ class Matrix {
             }
 
         };
-        T operator()(int x, int y){};
+        T operator()(int x, int y)
+        {
+            auto *temp = hColumns;
+         
+            while(temp->x != x and temp->next != NULL)
+            {
+                temp=temp->next;
+                while(temp->y != y and temp->down != NULL)
+                {
+                    temp=temp->down;
+                }
+            }
+            return temp->data;
+        };
         Matrix<T> operator*(Matrix<T> other){};
         Matrix<T> operator*(T scalar){};
         Matrix<T> operator+(Matrix<T> other){};

@@ -30,7 +30,7 @@ class Matrix {
             hColumns->y=0;
             auto *tempn = hColumns;
             auto *tempd = hRows;
-            for(int x=1; x<sizeX; x++)
+            for(int x=1; x<=sizeX; x++)
             {
                 auto *temp = new Node<T>;
                 tempn->next=temp;
@@ -39,7 +39,7 @@ class Matrix {
                 temp->data=x;
                 tempn = temp;
             }
-            for(int y=1; y<sizeY; y++)
+            for(int y=1; y<=sizeY; y++)
             {
                 auto *temp = new Node<T>;
                 tempd->down=temp;
@@ -76,7 +76,20 @@ class Matrix {
                 {
                     if(tempX->x==x)
                     {
-                        tempX->down=nodo;
+                        if(tempX->down==NULL)
+                        {
+                            tempX->down=nodo;
+                        }
+
+                        if(tempX->down->y>nodo->y)
+                        {
+                            nodo->down=tempX->down;
+                            tempX->down=nodo;
+                        }
+                        else if(tempX->down->y<nodo->y)
+                        {
+                            tempX->down->down=nodo;
+                        }
                         break;
                     }
                     tempX = tempX->next;
@@ -85,11 +98,24 @@ class Matrix {
                 {
                     if(tempY->y==y)
                     {
-                        tempY->next=nodo;
-                        break;
+                        if(tempY->next==NULL)
+                        {
+                            tempY->next=nodo;
+                        }
+
+                        if(tempY->next->x>nodo->x)
+                        {
+                            nodo->next=tempY->next;
+                            tempY->next=nodo;
+                        }
+                        else if(tempX->next->y<nodo->y)
+                        {
+                            tempX->next->next=nodo;
+                        }
                     }
                     tempY = tempY->down;
                 }
+                cout<<"Created node in"<<" "<<nodo->x<<" "<<nodo->y;
             }
 
         };

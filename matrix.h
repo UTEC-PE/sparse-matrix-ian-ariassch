@@ -215,6 +215,7 @@ class Matrix {
                 cout<<"InvalidMatrixB";
                 throw;
             }
+            else if (columns == other.columns and rows == other.rows){
             auto *temp2 = other.hColumns;
             auto *temp1 = other.hColumns;
             for(int i=0; i<=other.columns; i++)
@@ -254,7 +255,7 @@ class Matrix {
 
                     }
                 }
-            }
+            }}
         };
         Matrix<T> operator-(Matrix<T> other){};
         Matrix<T> transposed(){};

@@ -178,7 +178,44 @@ class Matrix {
 
             }
         };
-        Matrix<T> operator+(Matrix<T> other){};
+        Matrix<T> operator+(Matrix<T> other)
+        {
+            auto *temp1 = hColumns;
+            auto *temp2 = other.hColumns;
+            for(int i=0; i<=columns; i++)
+            {
+                if(temp1->next and temp2->next)
+                {
+                    temp1 = temp1->next;
+                    temp2 = temp2->next;
+                    for(int i=0; i<=rows;i++)
+                    {
+                            if(temp1->down)
+                            {
+                                temp1 = temp1->down;
+                            }
+                            else{temp1 = temp1->next;}
+                            if(temp2->down)
+                            {
+                                temp2 = temp2->down;
+                            }
+                            else{temp2 = temp2->next;}
+
+                            if( (temp2->x,temp2->y)==0 and temp2->x ==0 and temp2->y==0)
+                            {
+                                cout<<temp2->x<<" "<<temp2->y<<" "<<temp2->data<<" "<<i<<endl;
+                                //set(temp2->x, temp2->y, temp2->data);
+                            }
+                            else if(temp1->data!=NULL and temp2->data != NULL)
+                            {
+                            temp1->data += temp2->data;
+                            }
+
+                    }
+                }
+
+            }
+        };
         Matrix<T> operator-(Matrix<T> other){};
         Matrix<T> transposed(){};
         Matrix<T> operator=(Matrix<T> other){};

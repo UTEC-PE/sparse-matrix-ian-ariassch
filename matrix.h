@@ -289,6 +289,17 @@ class Matrix {
         Matrix<T> operator-(Matrix<T> other){};
         Matrix<T> transposed(){};
         Matrix<T> operator=(Matrix<T> other){};
+        T print()
+        {
+            for(int y = 1; y<=rows; y++)
+            {
+                for(int x=1; x<=columns; x++)
+                {
+                    cout<<get(x,y)<<" ";
+                }
+                cout<<endl;
+            }
+        }
 
         ~Matrix(){};
 };

@@ -14,7 +14,10 @@ class Matrix {
         int rows;
 
     public:
-        Matrix(){};
+        Matrix()
+        {
+
+        };
         Matrix(int sizeX, int sizeY)
         {
 
@@ -53,6 +56,10 @@ class Matrix {
 
         void set(int x, int y, T data)
         {
+            if(data == 0)
+            {
+                return;
+            }
             if(get(x,y) != NULL)
             {
                 auto *temp = hColumns;
@@ -214,26 +221,37 @@ class Matrix {
                  }
             }
         };
-        Matrix<T> operator*(Matrix<T> other){};
+        Matrix<T> operator*(Matrix<T> other)
+        {
+            auto C = Matrix(columns, other.rows);
+            int data;
+            for(int c=1; c <= columns; c++)
+            {
+                for (int i = 1; i <= rows; i++)
+                {
+                    for (int j = 1; j <= rows; j++)
+                    {
+                        data += get(j,i) * other.get(c,j);
+                        C.set(c,i,data);
+                    }
+
+                }
+            }
+        };
         Matrix<T> operator*(T scalar)
         {
-            auto *temp = hColumns;
-            for(int i=0; i<=columns; i++)
+            auto C = Matrix(columns, rows);
+            for(int y = 1; y<=rows; y++)
             {
-                if(temp->next)
+                for(int x=1; x<=columns; x++)
                 {
-                temp = temp->next;
-                    for(int i=0; i<=rows;i++)
-                    {
-                        if(temp->down)
-                        {
-                            temp = temp->down;
-                            temp->data *= scalar;
-                        }
-                    }
+                    int data = get(x,y)*scalar;
+                    C.set(x,y,data);
+
                 }
 
-            }
+
+            }return C;
         };
         Matrix<T> operator+(Matrix<T> other)
         {
@@ -242,53 +260,59 @@ class Matrix {
                 cout<<"InvalidMatrixB";
                 throw;
             }
-            else if (columns == other.columns and rows == other.rows){
-            auto resultado = *this;
-            auto *temp2 = other.hColumns;
-            auto *temp1 = other.hColumns;
-            for(int i=0; i<=other.columns; i++)
+            else if (columns == other.columns and rows == other.rows)
             {
-                if(temp2->next)
+                auto C = Matrix(columns, rows);
+                for(int y = 1; y<=rows; y++)
                 {
-                    temp1= temp2->next;
-
-                    for(int i=0; i<=other.rows;i++)
+                    for(int x=1; x<=columns; x++)
                     {
-
-                        if(temp2->x != 0 and temp2->y != 0)
-                        {
-                            if(resultado(temp2->x, temp2->y) == NULL)
-                            {
-                                resultado.set(temp2->x, temp2->y, temp2->data);
-                                temp2 = temp1;
-                                break;
-                            }
-                            else
-                            {
-                                resultado.set(temp2->x,temp2->y,(temp2->data+resultado(temp2->x, temp2->y)));
-                                temp2 = temp1;
-                                break;
-                            }
-
-                        }
-                        else if(temp2->down!=NULL and (temp2->x == 0 or temp2->y == 0))
-                        {
-                            temp2 = temp2->down;
-                        }
-                        else if(temp2->down == NULL)
-                        {
-                            temp2 = temp1;
-                            break;
-                        }
+                        int data = get(x,y)+other.get(x,y);
+                        C.set(x,y,data);
 
                     }
-                }
+
+                }return C;
             }
-            return resultado;}
         };
-        Matrix<T> operator-(Matrix<T> other){};
+        Matrix<T> operator-(Matrix<T> other)
+        {
+            if(columns < other.columns and rows < other.columns)
+            {
+                cout<<"InvalidMatrixB";
+                throw;
+            }
+            else if (columns == other.columns and rows == other.rows)
+            {
+                auto C = Matrix(columns, rows);
+                for(int y = 1; y<=rows; y++)
+                {
+                    for(int x=1; x<=columns; x++)
+                    {
+                        int data = get(x,y)-other.get(x,y);
+                        C.set(x,y,data);
+
+                    }
+
+                }return C;
+            }
+
+        };
         Matrix<T> transposed(){};
-        Matrix<T> operator=(Matrix<T> other){};
+        Matrix<T> operator=(Matrix<T> other)
+        {
+            for(int y = 1; y<=rows; y++)
+            {
+                for(int x=1; x<=columns; x++)
+                {
+                    int data = other.get(x,y);
+                    set(x,y,data);
+
+                }
+
+            }
+
+        };
         T print()
         {
             for(int y = 1; y<=rows; y++)

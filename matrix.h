@@ -14,10 +14,6 @@ class Matrix {
         int rows;
 
     public:
-        Matrix()
-        {
-
-        };
         Matrix(int sizeX, int sizeY)
         {
 
@@ -33,16 +29,17 @@ class Matrix {
             hColumns->y=0;
             auto *tempn = hColumns;
             auto *tempd = hRows;
-            for(int x=1; x<=sizeX; x++)
+            for(int x=2; x<=sizeX; x++)
             {
                 auto *temp = new Node<T>;
-                tempn->next=temp;
+
                 temp->x=x;
                 temp->y=0;
                 temp->data=x;
+                tempn->next=temp;
                 tempn = temp;
             }
-            for(int y=1; y<=sizeY; y++)
+            for(int y=2; y<=sizeY; y++)
             {
                 auto *temp = new Node<T>;
                 tempd->down=temp;
@@ -56,6 +53,54 @@ class Matrix {
 
         void set(int x, int y, T data)
         {
+            /*if(data==0)
+            {
+
+                auto *temp = hColumns;
+                auto *temp1 = hColumns;
+                auto *temp2 = hRows;
+                auto *temp3 = hColumns;
+
+                while(temp3->x != x and temp3->next != NULL)
+                {
+                    temp3=temp3->next;
+                }
+                while(temp3->y != y and temp3->down != NULL)
+                {
+                    temp3=temp3->down;
+                }
+
+                if(temp3->next == NULL and temp3->down == NULL){cout<<"Nodo no existe, no se hizo nada"<<endl;}
+
+                while(temp1->x != x and temp1->next != NULL)
+                {
+                    temp1=temp1->next;
+                }
+                while(temp1->down->y != y and temp1->down != NULL){temp1 = temp1->down;}
+                if(temp1->down->down)
+                {
+                    temp = temp1->down;
+                    temp1->down = temp1->down->down;
+                }
+                else{temp1->down = NULL;}
+                while(temp2->y != y and temp2->down != NULL)
+                {
+                    temp2=temp2->down;
+                }
+                while(temp2->next->x != x and temp2->next != NULL){temp2 = temp2->next;}
+                if(temp2->next->next)
+                {
+                    temp = temp2->next;
+                    temp2->next = temp2->next->next;
+                }else{temp2->next = NULL;}
+                    cout<<"Nodo "<<temp->x<<" "<<temp->y<<" borrado"<<endl;
+                    delete temp;
+                    return;
+
+            }*/
+
+            if(data==0){return;}
+
             if(get(x,y) != NULL)
             {
                 auto *temp = hColumns;
@@ -220,16 +265,16 @@ class Matrix {
         Matrix<T> operator*(Matrix<T> other)
         {
             if(rows == other.columns or other.rows == columns){
-            auto C = Matrix(columns, other.rows);
+            auto C = Matrix(other.columns, rows);
             int data;
-            for(int c=1; c <= other.rows; c++)
+            for(int c=1; c <= rows; c++)
             {
-                for (int i = 1; i <= columns; i++)
+                for (int i = 1; i <= other.columns; i++)
                 {
                     data = 0;
-                    for (int j = 1; j <= other.columns; j++)
+                    for (int j = 1; j <= columns; j++)
                     {
-                        data += get(c,j) * other(j,i);
+                        data += other(c,j) * get(j,i);
                     }
                     C.set(c,i,data);
                 }
